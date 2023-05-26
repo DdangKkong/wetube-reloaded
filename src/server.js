@@ -13,7 +13,6 @@ const handleLogin = (req, res) => {
 app.get("/", handleHome);
 app.get("/login", handleLogin);
 
-
 const handleListening = () => 
 console.log(`Server listenning on port http://localhost:${PORT} 🏹`);
 
