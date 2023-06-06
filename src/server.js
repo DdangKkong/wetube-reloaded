@@ -1,3 +1,6 @@
+import "./db";
+import "./models/Video";
+// Video.js를 import함으로써 사용하지 않더라도 모두가 알 수 있게 됨
 import express from "express";
 import morgan from "morgan";
 import globalRouter from "./routers/globalRouter";
@@ -19,6 +22,6 @@ app.use("/users", userRouter);
 
 
 const handleListening = () => 
-console.log(`Server listenning on port http://localhost:${PORT} 🏹`);
+console.log(`✅ Server listenning on port http://localhost:${PORT} 🏹`);
 
 app.listen(PORT, handleListening);
