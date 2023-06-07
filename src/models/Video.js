@@ -13,8 +13,12 @@ const videoSchema = new mongoose.Schema({
     },
 });
 
+/*
 const Video = mongoose.model("Video", videoSchema);
 export default Video;
+위처럼 했던걸 애러가 나서 아래로 바꿈 (검색해서 찾음)
+*/
+export default mongoose.models.Video || mongoose.model("Video", videoSchema);
 // default 사용했기 때문에 같은 형식으로 import됨
 
 
