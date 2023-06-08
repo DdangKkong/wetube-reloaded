@@ -17,9 +17,10 @@ export const home = async(req, res) => {
     // await는 database를 기다려준다, async 안에서 await를 사용하는것이 규칙
     return res.render("home", { pageTitle: "Home", videos });
 };
-export const watch = (req, res) => {
+export const watch = async (req, res) => {
     const { id } = req.params;
-    return res.render("watch", { pageTitle: `Watching` });
+    const video = await Video.findById(id);
+    return res.render("watch", { pageTitle: video.title, video });
 };
 export const getEdit = (req, res) => {
     const { id } = req.params;
@@ -35,8 +36,16 @@ export const getUpload = (req, res) => {
     return res.render("upload", { pageTitle: "Upload Video"});
 };
 
-export const postUpload = (req, res) => {
-    const { title } = req.body;
-
+export const postUpload = async (req, res) => {
+    const { title, description, hashtags } = req.body;
+    try {
+        await video.create({
+        title: title,
+        description: description,
+        hashtags: hashtags.split(",").map((word) => `#${word}`),
+        });
     return res.redirect("/");
+    } catch(error){
+        return res.render("upload", { pageTitle: "Upload Video", errorMessage: error._message, });
+    }
 };

@@ -3,14 +3,17 @@
 import mongoose from "mongoose";
 
 const videoSchema = new mongoose.Schema({
-    title: String,
-    description: String,
-    createdAt: Date,
-    hashtags: [{ type: String }],
+    title: { type: String, required: true, trim: true, maxLength: 80 },
+    description: { type: String, required: true, trim: true, minLength: 20 },
+    createdAt: { type: Date, required: true, default: Date.now },
+    hashtags: [{ type: String, trim: true }],
     meta: {
-        views: Number,
-        rating: Number,
+        views: { type: Number, default: 0, required: true},
+        rating: { type: Number, default: 0, required: true},
     },
+    // 데이터에 대한 구체적은 설정은 굉장이 중요하다. 더 구체화할수록 보조해주는 trim같은 것들도 사용할 수 있기 때문에
+    // 위의 중괄호 안에 있는 명령어?들은 mongoosejs.com 에서 확인 가능하다
+    // 바꿀때마다 upload.pug도 업데이트한다 둘 다 해야된대, html만 하면 사용자들이 수정 가능해
 });
 
 /*
