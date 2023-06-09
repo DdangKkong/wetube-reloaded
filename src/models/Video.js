@@ -17,6 +17,17 @@ const videoSchema = new mongoose.Schema({
 });
 
 /*
+videoSchema.pre("save", async function () {
+    this.hashtags = this.hashtags(0).split(",").map((word) =>word.startsWith("#") ? word : `#${word}`);
+});
+*/
+// model을 만들기 전에 middleware를 만들어야한대, 더 좋은방법을 위해 지운대
+
+videoSchema.static('formatHashtags', function(hashtags) {
+    return hashtags.split(",").map((word) => (word.startsWith('#') ? word : `#${word}`));
+})
+
+/*
 const Video = mongoose.model("Video", videoSchema);
 export default Video;
 위처럼 했던걸 애러가 나서 아래로 바꿈 (검색해서 찾음)
