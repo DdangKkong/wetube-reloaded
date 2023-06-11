@@ -23,7 +23,7 @@ export const watch = async (req, res) => {
     if(video){
         return res.render("watch", { pageTitle: video.title, video });
     }
-    return res. render("404", { pageTitle: "Video not found."});
+    return res.status(404).render("404", { pageTitle: "Video not found."});
 };
 
 export const getEdit = async (req, res) => {
@@ -64,8 +64,7 @@ export const postUpload = async (req, res) => {
         });
     return res.redirect("/");
     } catch(error){
-        return res.render("upload", { pageTitle: "Upload Video", errorMessage: error._message, });
-    }
+        return res.status(400).render("upload", { pageTitle: "Upload Video", errorMessage: error._message, })};
 };
 
 
