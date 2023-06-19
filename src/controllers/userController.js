@@ -116,9 +116,50 @@ export const logout = (req, res) => {
 export const getEdit = (req, res) => {
     return res.render("edit-profile", { pageTitle: "Edit Profile"});
 };
-export const postEdit = (req, res) => {
-    return res.render("edit-profile");
+export const postEdit = async (req, res) => {
+    const {
+        session: {
+            user: { _id },
+        },
+        body: { name, email, username, password },
+    } = req;
+    const updatedUser = await User.findByIdAndUpdate(_id, {
+        name:name, email:email, username:username, location:location,
+    },
+    { new:true }
+    );
+    return res.redirect("/users/edit");
 };
+
+
+export const getChangePassword = (req, res) => {
+    if (req.session.user.socialOnly === true) {
+        return res.redirect("/");
+    };
+    return res.render("users/Change-password", { pageTitle: "Change Password" });
+};
+export const postChangePassword = async (req, res) => {
+    const {
+        session: {
+            user: { _id },
+        },
+        body: { oldPassword, newPassword, newPasswordConfirmation },
+    } = req;
+    const user = await User.findById(_id);
+    const ok = await bcrypt.compare(oldPassword, user.password);
+    if(!ok) {
+        return res.status(400).render("users/Change-password", { pageTitle: "Change Password", errorMessage: "The current password is incorrect", });
+    };
+    if (newPassword !== newPasswordConfirmation) {
+        return res.status(400).render("users/Change-password", { pageTitle: "Change Password", errorMessage: "The password does not match the confirmation", });
+    };
+    
+    user.password = newPassword
+    await user.save();
+    
+    return res.redirect("/users/logout");
+};
+
 export const see = (req, res) => res.send("See User");
 
 
