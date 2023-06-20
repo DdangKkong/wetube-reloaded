@@ -1,4 +1,5 @@
 import User from "../models/User"
+import Video from "../models/Video";
 import fetch from "node-fetch";
 import bcrypt from "bcrypt"
 
@@ -119,15 +120,18 @@ export const getEdit = (req, res) => {
 export const postEdit = async (req, res) => {
     const {
         session: {
-            user: { _id },
+            user: { _id, avatarUrl },
         },
-        body: { name, email, username, password },
+        body: { name, email, username, location },
+        file,
     } = req;
     const updatedUser = await User.findByIdAndUpdate(_id, {
+        avatarUrl: file ? file.path : avatarUrl,
         name:name, email:email, username:username, location:location,
     },
-    { new:true }
+    { new: true }
     );
+    req.session.user = updatedUser;
     return res.redirect("/users/edit");
 };
 
@@ -160,7 +164,15 @@ export const postChangePassword = async (req, res) => {
     return res.redirect("/users/logout");
 };
 
-export const see = (req, res) => res.send("See User");
+export const see = async(req, res) => {
+    const { id } = req.params;
+    // profile은 모두가 볼 수 있기 때문에 session에서 id 가져오지 않고 URL에서 가져온대
+    const user = await User.findById(id).populate("videos");
+    if(!user){
+        return res.status(404).render("404", { pageTitle: "User not found." });
+    };
+    return res.render("users/profile", { pageTitle: user.name, user: user, });
+};
 
 
 
