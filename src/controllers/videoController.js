@@ -14,7 +14,7 @@ console.log("finished")
 // mongoose 사이트에서 나와있는 함수 사용, promise로 대체/ 위처럼 하면 start, finished 이후에 videos 출력/ 아래를 하면 순서대로 출력됨
 
 export const home = async(req, res) => {
-    const videos = await Video.find({}).sort({ createdAt: "desc" });
+    const videos = await Video.find({}).sort({ createdAt: "desc" }).populate("owner");
     // await는 database를 기다려준다, async 안에서 await를 사용하는것이 규칙, 이렇게 하면 순서대로 출력됨
     return res.render("home", { pageTitle: "Home", videos });
 };
@@ -109,7 +109,7 @@ export const search = async (req, res) => {
                 $regex: new RegExp(keyword, "i"),
                 // i 는 대문자와 소문자 구분을 하지 않는걸 말한대
             }, 
-        });
+        }).populate("owner");
     }
     return res.render("search", { pageTitle:"Search", videos });
     // 이 코드가 base.pug에서 쓰이기 때문에 pageTitle이 필요하다
