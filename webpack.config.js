@@ -3,7 +3,10 @@ const path = require("path");
 
 
 module.exports = {
-    entry: "./src/client/js/main.js",
+    entry: {
+        main: "./src/client/js/main.js",
+        videoPlayer: "./src/client/js/videoPlayer.js"
+    },
     mode: 'development',
     watch: true,
     // npm run dev, npm run assets 둘 다 했을때, 수정하고 저장시 자동으로 업데이트해준대
@@ -11,7 +14,7 @@ module.exports = {
         filename: "css/styles.css",
     })],
     output: {
-        filename: "js/main.js",
+        filename: "js/[name].js",
         path: path.resolve(__dirname, "assets"),
         clean: true,
         // output 폴더를 시작하기 전에 clean 해준대 
