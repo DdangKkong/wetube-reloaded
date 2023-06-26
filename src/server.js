@@ -2,6 +2,7 @@
 import express from "express";
 import morgan from "morgan";
 import session from "express-session";
+import flash from "express-flash";
 import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRouter";
@@ -18,6 +19,7 @@ app.set("view engine", "pug");
 app.set("views", process.cwd() + "/src/views");
 app.use(logger);
 app.use(express.urlencoded({ extended: true}));
+app.use(express.json());
 
 app.use(session({
     secret: process.env.COOKIE_SECRET,
@@ -32,7 +34,7 @@ app.get("/add-one", (req, res, next) => {
     return res.send(`${req.session.id}`);
 });
 
-
+app.use(flash());
 app.use(localsMiddleware);
 // localsMiddleware가 session 뒤에 있기 때문에 session을 받아 올 수 있다
 app.use("/uploads", express.static("uploads"));

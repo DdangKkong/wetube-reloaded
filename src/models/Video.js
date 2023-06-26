@@ -5,7 +5,8 @@ import mongoose from "mongoose";
 const videoSchema = new mongoose.Schema({
     title: { type: String, required: true, trim: true, maxLength: 80 },
     fileUrl: { type: String, required: true },
-    description: { type: String, required: true, trim: true, minLength: 10 },
+    thumbUrl: { type: String, required: true },
+    description: { type: String, required: true, trim: true, minLength: 2 },
     createdAt: { type: Date, required: true, default: Date.now },
     hashtags: [{ type: String, trim: true }],
     meta: {
@@ -15,7 +16,8 @@ const videoSchema = new mongoose.Schema({
     // 데이터에 대한 구체적은 설정은 굉장이 중요하다. 더 구체화할수록 보조해주는 trim같은 것들도 사용할 수 있기 때문에
     // 위의 중괄호 안에 있는 명령어?들은 mongoosejs.com 에서 확인 가능하다
     // 바꿀때마다 upload.pug도 업데이트한다 둘 다 해야된대, html만 하면 사용자들이 수정 가능해
-    owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref:"User" },
+    comments: [{type: mongoose.Schema.Types.ObjectId, required: true, ref: "Comment"}],
+    owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
     // 노란색 글씨는 javascript에서 지원하는 형식이고 ObjectId는 mongoose에서 지원하는거라 위처럼 쓴거야
 });
 

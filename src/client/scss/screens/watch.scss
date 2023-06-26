@@ -1,0 +1,48 @@
+// 기존에 있었던것같은데 없어져서 다시 만듦, 다른 파일들에 연결 안되어있을지도몰라
+
+.video__data {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    .video__title {
+        font-size: 26px;
+        margin-bottom: 5px;
+    }
+    .video__createdAt {
+        font-size: 12px;
+    }
+    .video__owner {
+        margin-bottom: 5px;
+        font-size: 14px;
+        a {
+        color: cornflowerblue;
+        text-decoration: underline;
+        }
+    }
+}
+.video__comments {
+    display: flex;
+    flex-direction: column;
+    max-width: 320px;
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 20px;
+    .video__comment {
+        padding: 10px;
+        border-radius: 9999px;
+        background-color: white;
+        color: black;
+        margin-bottom: 10px;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
