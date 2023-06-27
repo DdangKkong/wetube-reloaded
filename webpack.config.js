@@ -10,8 +10,6 @@ module.exports = {
         recorder: BASE_JS + "recorder.js",
         commentSection: BASE_JS + "commentSection.js",
     },
-    mode: 'development',
-    watch: true,
     // npm run dev, npm run assets 둘 다 했을때, 수정하고 저장시 자동으로 업데이트해준대
     plugins: [new MiniCssExtractPlugin({
         filename: "css/styles.css",

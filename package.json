@@ -9,8 +9,12 @@
     "url": "(https://github.com/DdangKkong/wetube-reloaded.git)"
   },
   "scripts": {
+    "start": "node build/init.js",
+    "build": "npm run build:server && npm run build:assets",
+    "build:server" : "babel src -d build",
+    "build:assets" : "webpack --mode=production",
     "dev:server": "nodemon",
-    "dev:assets": "webpack"
+    "dev:assets": "webpack --mode=development -w"
   },
   "description": "The best way to watch videos.",
   "dependencies": {
@@ -30,7 +34,8 @@
     "regenerator-runtime": "^0.13.11"
   },
   "devDependencies": {
-    "@babel/core": "^7.21.8",
+    "@babel/cli": "^7.22.5",
+    "@babel/core": "^7.22.5",
     "@babel/node": "^7.20.7",
     "@babel/preset-env": "^7.21.5",
     "babel-loader": "^9.1.2",
